@@ -5,82 +5,25 @@ Designs and applies a Butterworth low-pass filter to a noisy audio signal for no
 
 ---
 
-### Workflow & Key Equations
+# filter_design.m
 
-1. **Audio Frequency Analysis**  
-   - **Read audio:**  
-     ```matlab
-     [x[n], F_s] = audioread('noisyaudio.wav');
-     ```  
-   - **Compute DFT via FFT:**  
-     \[
-       X[k] = \sum_{n=0}^{N-1} x[n]\;e^{-j\,2\pi k n / N}
-     \]  
-     plotted with  
-     ```matlab
-     fft(x);
-     plot(f, abs(X));
-     ```
+**What it does**  
+This MATLAB script guides you through a complete Butterworth low-pass filtering workflow to remove unwanted noise from an audio recording. Internally, it:
 
-2. **Filter Specifications**  
-   - **Passband & Stopband Edges (Hz):**  
-     \(f_p = 2000,\;f_s = 2500\)  
-   - **Digital frequencies:**  
-     \[
-       \omega_p = 2\pi\,\frac{f_p}{F_s},\quad
-       \omega_s = 2\pi\,\frac{f_s}{F_s}
-     \]  
-   - **Measured magnitudes at edges:**  
-     \[
-       M_p = \text{avg }\{\,|X[k]|\text{ around }\omega_p\},\quad
-       M_s = \text{avg }\{\,|X[k]|\text{ around }\omega_s\}
-     \]  
-   - **Required stopband attenuation (dB):**  
-     \[
-       A_s = -20\,\log_{10}\bigl(M_s / M_p\bigr)
-     \]
+1. **Loads** your noisy WAV file.  
+2. **Analyzes** its frequency content and displays a spectrum plot.  
+3. **Designs** a Butterworth low-pass filter to meet your passband/stopband requirements.  
+4. **Applies** the filter and shows the before-and-after spectra.  
+5. **Plays back** both the original and the cleaned audio so you can hear the difference.  
+6. **Saves** the filtered result as a new WAV file.
 
-3. **Analog Prototype Pre-Warping**  
-   - **Sampling period:** \(T = 1/F_s\)  
-   - **Analog edges (rad/s):**  
-     \[
-       \Omega_p = \omega_p / T,\quad
-       \Omega_s = \omega_s / T
-     \]
+---
 
-4. **Butterworth Order & Cutoff**  
-   - **Ripple factors:**  
-     \[
-       k_p = 10^{0.1 A_p} - 1,\quad
-       k_s = 10^{0.1 A_s} - 1
-     \]  
-     with \(A_p = 1\) dB.  
-   - **Filter order:**  
-     \[
-       N = \left\lceil
-         \frac{\ln(k_s / k_p)}{2\,\ln(\Omega_s / \Omega_p)}
-       \right\rceil
-     \]  
-   - **Analog cutoff:**  
-     \[
-       \Omega_c = \frac{\Omega_s}{\,k_s^{1/(2N)}\,},\quad
-       \omega_c = \Omega_c \, T
-     \]
+**How to use it**  
+1. Open **filter_design.m** in MATLAB.  
+2. Set your input filename (e.g. `'noisyaudio.wav'`) and desired output filename.  
+3. Adjust the passband and stopband edge frequencies in the script header if needed.  
+4. Run the script:  
+   ```matlab
+   >> filter_design
 
-5. **Digital Filter Design & Application**  
-   - **Design:**  
-     ```matlab
-     [b,a] = butter(N, ω_c/π, 'low');
-     ```  
-   - **Filter signal:**  
-     ```matlab
-     y[n] = filter(b, a, x[n]);
-     ```
-
-6. **Results & Output**  
-   - Plot and compare DFTs of **original** vs. **filtered** signals.  
-   - Play back with `sound(…)`.  
-   - Save filtered audio:  
-     ```matlab
-     audiowrite('filteredaudio.wav', y, F_s);
-     ```
