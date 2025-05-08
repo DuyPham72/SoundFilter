@@ -5,8 +5,6 @@ Designs and applies a Butterworth low-pass filter to a noisy audio signal for no
 
 ---
 
-# filter_design.m
-
 **What it does**  
 This MATLAB script guides you through a complete Butterworth low-pass filtering workflow to remove unwanted noise from an audio recording. Internally, it:
 
