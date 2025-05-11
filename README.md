@@ -38,4 +38,4 @@ This MATLAB script guides you through a complete Butterworth low-pass filtering 
 4. Run the script:  
    ```matlab```
    ```
-   >> filter_design
+   >> soundfilter
