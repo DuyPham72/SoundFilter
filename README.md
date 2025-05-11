@@ -11,7 +11,7 @@ This MATLAB script guides you through a complete Butterworth low-pass filtering 
 1. **Loads** your noisy WAV file.  
 2. **Analyzes** its frequency content and displays a spectrum plot by using Discrete Fourier Transform (DFT).  
 3. **Applies** Impulse Invariance method to design an analog filter.
-4. **Designs** a Butterworth low-pass filter to meet your passband/stopband requirements.
+4. **Designs** a Butterworth low-pass filter base on the previous analog filter.
 5. **Applies** the filter and shows the before-and-after spectra.  
 6. **Plays back** both the original and the cleaned audio so you can hear the difference.  
 7. **Saves** the filtered result as a new WAV file.
