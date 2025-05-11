@@ -32,7 +32,7 @@ This MATLAB script guides you through a complete Butterworth low-pass filtering 
 ---
 
 **How to use it**  
-1. Open **filter_design.m** in MATLAB.  
+1. Open **soundfilter.m** in MATLAB.  
 2. Set your input filename (e.g. `'noisyaudio.wav'`) and desired output filename.  
 3. Adjust the passband and stopband edge frequencies in the script header if needed.  
 4. Run the script:  
